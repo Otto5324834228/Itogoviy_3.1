@@ -1,0 +1,26 @@
+В загрузке НИЧЕГО сложного нет.
+Загрузили, распаковали, бинарник в /usr/bin/
+
+useradd -rs /bin/false node_exporter
+chown node_exporter:node_exporter /usr/bin/node_exporter
+
+Сервис:
+nano /etc/systemd/system/node_exporter.bin
+
+
+[Unit]
+Description=Prometheus Node Exporter
+After=network.target
+
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+Restart=on-failure
+ExecStart=/usr/bin/node_exporter 
+
+[Install]
+WantedBy=multi-user.target
+
+Усё!
+Можно ещё enable

@@ -1,0 +1,14 @@
+Заходим на https://letsencrypt.org/
+Нажимаем "Get Started", CertBot ACME Client
+Для данной конфигурации выбираем "nginx" и "Linux pip"
+Далее команды:
+sudo apt update
+sudo apt install pip
+sudo apt install python3 python3-dev python3-venv libaugeas-dev gcc
+sudo python3 -m venv /opt/certbot/
+sudo /opt/certbot/bin/pip install --upgrade pip
+/opt/certbot/bin/pip install certbot certbot-nginx
+ln -s /opt/certbot/bin/certbot /usr/bin/certbot
+certbot --nginx
+
+Выбираем домены для сертификатов и усё!

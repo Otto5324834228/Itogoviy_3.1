@@ -1,0 +1,20 @@
+В рамках данного модуля можно сделать всё максимально просто:
+
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+sudo iptables -A INPUT -i lo -j ACCEPT
+
+sudo iptables -A INPUT -s (локалка с маской) -p tcp --dport (порт) -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport (порт) -j DROP
+
+И сохраняем:
+
+sudo apt-get update
+sudo apt-get install iptables-persistent -y
+
+sudo netfilter-persistent save
+#или
+sudo iptables-save | sudo tee /etc/iptables/rules.v4
+
+Если есть желание боее подробно изучить тему:
+https://www.youtube.com/watch?v=Q0EC8kJlB64&t=274s
+https://snakeproject.ru/rubric/article.php?art=iptables_12112020

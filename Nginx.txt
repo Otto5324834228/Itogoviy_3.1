@@ -1,0 +1,30 @@
+sudo apt update
+sudo apt install nginx
+
+sudo nano /etc/nginx/sites-available/(ваш домен)
+
+Далее конфиг вида
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name (ваш домен) www.(ваш домен);
+        
+    location / {
+        proxy_pass app_server_address;
+        include proxy_params;
+    }
+}
+
+Это для прокси
+Создаём ссылку в папке sites availave:
+sudo ln -s /etc/nginx/sites-available/(ваш домен) /etc/nginx/sites-enabled/
+
+Проверяем:
+sudo nginx -t
+
+Рестарт сервиса:
+sudo systemctl restart nginx
+
+Усё!

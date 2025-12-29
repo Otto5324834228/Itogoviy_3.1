@@ -1,0 +1,37 @@
+groups:
+- name: test
+  rules:
+  - alert: AlwaysFiring
+    expr: vector(1)
+    for: 10s
+    labels:
+      severity: critical
+      dev: test
+    annotations:
+      summary: "ТЕСТОВЫЙ АЛЕРТ"
+      description: "Если это пришло — всё работает"
+- name: system
+  rules:
+  - alert: HighCPUUsage
+    expr: |
+      100 * (1 - avg by (instance) (
+        rate(node_cpu_seconds_total{mode="idle"}[5m])
+      )) > 75
+    for: 2m
+    labels:
+      severity: warning
+      dev: prod
+    annotations:
+      summary: "Высокая нагрузка на CPU"
+      description: "CPU на {{ $labels.instance }} > 75% более 2 минут"
+- name: u_nas_nexvatka_boepripasov
+  rules:
+  - alert: HostDown
+    expr: up == 0
+    for: 1m
+    labels:
+      severity: critical
+      dev: prod
+    annotations:
+      summary: "Сервер недоступен"
+      description: "{{ $labels.instance }} не отвечает более 1 минуты"

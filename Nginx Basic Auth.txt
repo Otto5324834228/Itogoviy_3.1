@@ -1,0 +1,19 @@
+Данная технология позволяет устанавливать пользователей и пароли для доменов в nginx
+
+sh -c "echo -n '(ваш юзер):' >> /etc/nginx/.htpasswd" (создаём пользователя)
+
+sudo sh -c "openssl passwd -apr1 >> /etc/nginx/.htpasswd" (задаём ему пароль)
+
+sudo apt-get update
+sudo apt-get install apache2-utils 
+
+sudo htpasswd -c /etc/nginx/.htpasswd (ваш юзер) (ещё раз создаём)
+
+sudo nano /etc/nginx/sites-enabled/(ваш домен)
+
+И добавляем эти прекрасные строчки к "location":
+
+        auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+
+Усё!
